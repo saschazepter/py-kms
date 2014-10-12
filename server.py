@@ -15,7 +15,8 @@ from rpcBase import rpcBase
 config = {}
 
 def main():
-	parser = argparse.ArgumentParser()
+	parser = argparse.ArgumentParser(description='KMS Server Emulator', epilog="version: py-kms_2014-10-13 build 1")
+	#parser = argparse.ArgumentParser()
 	parser.add_argument("ip", nargs="?", action="store", default="0.0.0.0", help="The IP address to listen on. The default is \"0.0.0.0\" (all interfaces).", type=str)
 	parser.add_argument("port", nargs="?", action="store", default=1688, help="The network port to listen on. The default is \"1688\".", type=int)
 	parser.add_argument("-e", "--epid", dest="epid", default=None, help="Use this flag to manually specify an ePID to use. If no ePID is specified, a random ePID will be generated.", type=str)
@@ -27,8 +28,15 @@ def main():
 	parser.add_argument("-d", "--debug", dest="debug", action="store_const", const=True, default=False, help="Use this flag to enable debug output. Implies \"-v\".")
 	parser.add_argument("-s", "--sqlite", dest="sqlite", action="store_const", const=True, default=False, help="Use this flag to store request information from unique clients in an SQLite database.")
 	parser.add_argument("-o", "--log", dest="log", action="store_const", const=True, default=False, help="Use this flag to enable logging to a file.")
-	parser.add_argument("-w", "--hwid", dest="hwid", action="store", default='364F463A8863D35F', help="Use this flag to specify a HWID. The HWID must be an 16-character string of hex characters. The default is \"364F463A8863D35F\".")	
+	parser.add_argument("-w", "--hwid", dest="hwid", action="store", default='364F463A8863D35F', help="Use this flag to specify a HWID. The HWID must be an 16-character string of hex characters. The default is \"364F463A8863D35F\" or type \"random\" to auto generate the HWID.")	
+	
 	config.update(vars(parser.parse_args()))
+	
+	#Random HWID
+	if config['hwid'] == "random":
+		randomhwid = uuid.uuid4().hex
+		config['hwid'] = randomhwid[:16]
+	
 	# Sanitize HWID
 	try:
 		config['hwid'] = binascii.a2b_hex(re.sub(r'[^0-9a-fA-F]', '', config['hwid'].strip('0x')))
@@ -52,6 +60,7 @@ def main():
 	server = SocketServer.TCPServer((config['ip'], config['port']), kmsServer)
 	server.timeout = 5
 	print "TCP server listening at %s on port %d." % (config['ip'],config['port'])
+	print "HWID: ", binascii.b2a_hex(config['hwid'])
 	server.serve_forever()
 
 class kmsServer(SocketServer.BaseRequestHandler):
