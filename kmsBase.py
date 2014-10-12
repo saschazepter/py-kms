@@ -111,6 +111,15 @@ class kmsBase:
 		uuid.UUID("7476d79f-8e48-49b4-ab63-4d0b813a16e4") : "Windows 8.1 ProfessionalN",
 		uuid.UUID("fe1c3238-432a-43a1-8e25-97e7d1ef10f3") : "Windows 8.1 Core",
 		uuid.UUID("78558a64-dc19-43fe-a0d0-8075b2a370a3") : "Windows 8.1 CoreN",
+		uuid.UUID("ffee456a-cd87-4390-8e07-16146c672fd0") : "Windows 8.1 Core ARM",
+		uuid.UUID("c72c6a1d-f252-4e7e-bdd1-3fca342acb35") : "Windows 8.1 Core Single Language",
+		uuid.UUID("db78b74f-ef1c-4892-abfe-1e66b8231df6") : "Windows 8.1 Core Country Specific",
+		uuid.UUID("e9942b32-2e55-4197-b0bd-5ff58cba8860") : "Windows 8.1 Core Connected",
+		uuid.UUID("c6ddecd6-2354-4c19-909b-306a3058484e") : "Windows 8.1 Core ConnectedN",
+		uuid.UUID("b8f5e3a3-ed33-4608-81e1-37d6c9dcfd9c") : "Windows 8.1 Core Connected Single Language",
+		uuid.UUID("ba998212-460a-44db-bfb5-71bf09d1c68b") : "Windows 8.1 Core Connected Country Specific",
+		uuid.UUID("e58d87b5-8126-4580-80fb-861b22f79296") : "Windows 8.1 Professional Student",
+		uuid.UUID("cab491c7-a918-4f60-b502-dab75e334f40") : "Windows 8.1 Professional StudentN",
 		uuid.UUID("a00018a3-f20f-4632-bf7c-8daa5351c914") : "Windows 8 Professional WMC",
 		uuid.UUID("a98bcd6d-5343-4603-8afe-5908e4611112") : "Windows 8 Professional",
 		uuid.UUID("ebf245c1-29a8-4daf-9cb1-38dfc608a8c8") : "Windows 8 ProfessionalN",
@@ -166,6 +175,10 @@ class kmsBase:
 		uuid.UUID("d9f5b1c6-5386-495a-88f9-9ad6b41ac9b3") : "Office Word 2013",
 		uuid.UUID("b322da9c-a2e2-4058-9e4e-f59a6970bd69") : "Office Professional Plus 2013",
 		uuid.UUID("b13afb38-cd79-4ae5-9f7f-eed058d750ca") : "Office Standard 2013",
+		uuid.UUID("ba947c44-d19d-4786-b6ae-22770bc94c54") : "Windows Server 2015 Datacenter TechPreview",
+		uuid.UUID("a4383e6b-dada-423d-a43d-f25678429676") : "Windows 10 Professional TechPreview",
+		uuid.UUID("cf59a07b-1a2a-4be0-bfe0-423b5823e663") : "Windows 10 Professional WMC TechPreview",
+		uuid.UUID("cde952c7-2f96-4d9d-8f2b-2d349f64fc51") : "Windows 10 Enterprise TechPreview",
 	}
 
 	licenseStates = {
