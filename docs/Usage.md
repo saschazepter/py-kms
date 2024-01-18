@@ -1,8 +1,8 @@
 # Usage
 
 ## Start Parameters
-***
 
+(pykms-server-py)=
 ### pykms_Server.py
 Follows a list of usable parameters:
 
@@ -92,18 +92,18 @@ Mon, 12 Jun 2017 22:09:00 INFO     HWID: 58C4F4E53AE14224
 
 You can also enable other suboptions of `-F` doing what is reported in the following table:
 
-| command | pretty msg | logging msg | logfile |
-| --- | --- | --- | --- |
-| `-F <logfile>` | ON | OFF | ON |
-| `-F STDOUT` | OFF | ON | OFF |
-| `-F FILESTDOUT <logfile>` | OFF | ON | ON |
-| `-F STDOUTOFF <logfile>` | OFF | OFF | ON |
-| `-F FILEOFF` | ON | OFF | OFF |
+| command                   | pretty msg | logging msg | logfile |
+| ------------------------- | ---------- | ----------- | ------- |
+| `-F <logfile>`            | ON         | OFF         | ON      |
+| `-F STDOUT`               | OFF        | ON          | OFF     |
+| `-F FILESTDOUT <logfile>` | OFF        | ON          | ON      |
+| `-F STDOUTOFF <logfile>`  | OFF        | OFF         | ON      |
+| `-F FILEOFF`              | ON         | OFF         | OFF     |
 
     -S or --logsize <MAXSIZE>
 > Use this flag to set a maximum size (in MB) to the output log file. Deactivated by default.
 
-##### subparser `connect`
+#### subparser `connect`
 
     -n or --listen <'IP,PORT'>
 > Use this option to add multiple listening ip address - port couples. Note the format with the comma between the ip address and the port number. You can use this option more than once.
@@ -122,16 +122,16 @@ If used it refers to all addresses (main and additional). Deactivated by default
 
 examples (with fictitious addresses and ports):
 
-| command | address (main) | backlog (main) | reuse port (main) | address (listen) | backlog (listen) | reuse port (listen) | dualstack (main / listen) |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| `python3 pykms_Server.py connect -b 12` | ('::', 1688) | 12 | True | [] | [] | [] | False |
-| `python3 pykms_Server.py :: connect -b 12 -u -d` | ('::', 1688) | 12 | False | [] | [] | [] | True |
-| `python3 pykms_Server.py connect -n 1.1.1.1,1699 -b 10` | ('::', 1688) | 5 | True | [('1.1.1.1', 1699)] | [10] | [True] | False |
-| `python3 pykms_Server.py :: 1655 connect -n 2001:db8:0:200::7,1699 -d -b 10 -n 2.2.2.2,1677 -u` | ('::', 1655) | 5 | True | [('2001:db8:0:200::7', 1699), ('2.2.2.2', 1677)] | [10, 5] | [True, False] | True |
-| `python3 pykms_Server.py connect -b 12 -u -n 1.1.1.1,1699 -b 10 -n 2.2.2.2,1677 -b 15` | ('::', 1688) | 12 | False | [('1.1.1.1', 1699), ('2.2.2.2', 1677)] | [10, 15] | [False, False] | False |
-| `python3 pykms_Server.py connect -b 12 -n 1.1.1.1,1699 -u -n 2.2.2.2,1677` | ('::', 1688) | 12 | True | [('1.1.1.1', 1699), ('2.2.2.2', 1677)] | [12, 12] | [False, True] | False |
-| `python3 pykms_Server.py connect -d -u -b 8 -n 1.1.1.1,1699 -n 2.2.2.2,1677 -b 12` | ('::', 1688) | 8 | False | [('1.1.1.1', 1699), ('2.2.2.2', 1677)] | [8, 12] | [False, False] | True |
-| `python3 pykms_Server.py connect -b 11 -u -n ::,1699 -n 2.2.2.2,1677` | ('::', 1688) | 11 | False | [('::', 1699), ('2.2.2.2', 1677)] | [11, 11] | [False, False] | False |
+| command                                                                                         | address (main) | backlog (main) | reuse port (main) | address (listen)                                 | backlog (listen) | reuse port (listen) | dualstack (main / listen) |
+| ----------------------------------------------------------------------------------------------- | -------------- | -------------- | ----------------- | ------------------------------------------------ | ---------------- | ------------------- | ------------------------- |
+| `python3 pykms_Server.py connect -b 12`                                                         | ('::', 1688)   | 12             | True              | []                                               | []               | []                  | False                     |
+| `python3 pykms_Server.py :: connect -b 12 -u -d`                                                | ('::', 1688)   | 12             | False             | []                                               | []               | []                  | True                      |
+| `python3 pykms_Server.py connect -n 1.1.1.1,1699 -b 10`                                         | ('::', 1688)   | 5              | True              | [('1.1.1.1', 1699)]                              | [10]             | [True]              | False                     |
+| `python3 pykms_Server.py :: 1655 connect -n 2001:db8:0:200::7,1699 -d -b 10 -n 2.2.2.2,1677 -u` | ('::', 1655)   | 5              | True              | [('2001:db8:0:200::7', 1699), ('2.2.2.2', 1677)] | [10, 5]          | [True, False]       | True                      |
+| `python3 pykms_Server.py connect -b 12 -u -n 1.1.1.1,1699 -b 10 -n 2.2.2.2,1677 -b 15`          | ('::', 1688)   | 12             | False             | [('1.1.1.1', 1699), ('2.2.2.2', 1677)]           | [10, 15]         | [False, False]      | False                     |
+| `python3 pykms_Server.py connect -b 12 -n 1.1.1.1,1699 -u -n 2.2.2.2,1677`                      | ('::', 1688)   | 12             | True              | [('1.1.1.1', 1699), ('2.2.2.2', 1677)]           | [12, 12]         | [False, True]       | False                     |
+| `python3 pykms_Server.py connect -d -u -b 8 -n 1.1.1.1,1699 -n 2.2.2.2,1677 -b 12`              | ('::', 1688)   | 8              | False             | [('1.1.1.1', 1699), ('2.2.2.2', 1677)]           | [8, 12]          | [False, False]      | True                      |
+| `python3 pykms_Server.py connect -b 11 -u -n ::,1699 -n 2.2.2.2,1677`                           | ('::', 1688)   | 11             | False             | [('::', 1699), ('2.2.2.2', 1677)]                | [11, 11]         | [False, False]      | False                     |
 
 ### pykms_Client.py
 If _py-kms_ server doesn't works correctly, you can test it with the KMS client `pykms_Client.py`, running on the same machine where you started `pykms_Server.py`.
@@ -197,8 +197,9 @@ You can enable same _pykms_Server.py_ suboptions of `-F`.
     -S or --logsize <MAXSIZE>
 > Use this flag to set a maximum size (in MB) to the output log file. Deactivated by default.
 
+(docker-environment)=
 ## Docker Environment
-This are the currently used `ENV` statements from the Dockerfile(s). For further references what exactly the parameters mean, please see the start parameters for the [server](Usage.html#pykms-server-py).
+This are the currently used `ENV` statements from the Dockerfile(s). For further references what exactly the parameters mean, please see the start parameters for the [server](#pykms-server-py).
 ```
 # IP-address
 # The IP address to listen on. The default is "::" (all interfaces).
@@ -252,7 +253,6 @@ ENV LOGSIZE ""
 The product asks for a key during installation, so it needs you to enter the GVLK. Then the user can set connection parameters, while KMS server must already be running on server machine. Finally with specific commands, activation occurs automatically and can be extended later every time for another 180 (or 30 or 45) days.
 
 ### Windows
-***
 The `//nologo` option of `cscript` was used only to hide the startup logo.
 
 ![win1](img/win1.png)
@@ -270,7 +270,6 @@ The `//nologo` option of `cscript` was used only to hide the startup logo.
 6. View license informations (optional).
 
 ### Office
-***
 Note that you’ll have to install a volume license (VL) version of Office. Office versions downloaded from MSDN and / or Technet are non-VL.
 
 ![off1](img/off1.png)

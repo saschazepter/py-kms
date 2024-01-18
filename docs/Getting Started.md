@@ -2,7 +2,6 @@
 What follows are some guides how to start the `pykms_Server.py` script, which provides the emulated server.
 
 ## Running as a service
-***
 You can simply manage a daemon that runs as a background process. This can be achieved by using any of the notes below or by writing your own solution.
 
 ### Docker
@@ -56,7 +55,7 @@ services:
 ```
 
 #### Parameters
-Below is a little bit more extended run command, detailing all the different supported environment variables to set. For further reference see the [start parameters](Usage.html#docker-environment) for the docker environment.
+Below is a little bit more extended run command, detailing all the different supported environment variables to set. For further reference see the [start parameters](#docker-environment) for the docker environment.
 ```bash
 docker run -it -d --name py3-kms \
     -p 8080:8080 \
@@ -156,7 +155,6 @@ They might be useful to you:
 -  [FreeBSD](https://github.com/SystemRage/py-kms/issues/89)
 
 ## Manual Execution
-***
 
 ### Dependencies
 - Python 3.x.
