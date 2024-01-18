@@ -28,7 +28,6 @@ RUN apk add --no-cache --update \
   tzdata \
   shadow \
   && pip3 install --no-cache-dir -r /home/py-kms/requirements.txt \
-  #&& apk del git build-base python3-dev \
   && mkdir /db/ \
   && adduser -S py-kms -G users -s /bin/bash \
   && chown py-kms:users /home/py-kms \
