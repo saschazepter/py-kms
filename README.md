@@ -46,4 +46,4 @@ The wiki has been completly reworked and is now available on [readthedocs.io](ht
 - To show the help pages type: `python3 pykms_Server.py -h` and `python3 pykms_Client.py -h`.
 
 ## License
-   - _py-kms_ is [![Unlicense](https://img.shields.io/badge/license-unlicense-lightgray.svg)](https://github.com/SystemRage/py-kms/blob/master/LICENSE)
+   - _py-kms_ is [![Unlicense](https://img.shields.io/badge/license-unlicense-lightgray.svg)](./LICENSE)
