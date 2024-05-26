@@ -42,8 +42,8 @@ services:
   kms:
     image: ghcr.io/py-kms-organization/py-kms:python3
     ports:
-      - 1688:1688
-      - 8080:8080
+      - 1688:1688 # kms
+      - 8080:8080 # web-interface
     environment:
       IP: "::"
       HWID: RANDOM
@@ -192,6 +192,9 @@ user@host ~/path/to/folder/py-kms $ python3 pykms_Server.py 192.168.1.102 1688
 
 To stop `pykms_Server.py`, in the same bash window where code running, simply press `CTRL+C`.
 Alternatively, in a new bash window, use `kill <pid>` command (you can type `ps aux` first and have the process <pid>) or `killall <name_of_server>`.
+
+### Web-Interface
+As you may have noticed, the Docker container contains a web-interface, replacing the old GUI. If you want to launch it manually, checkout this [issue discussion](https://github.com/Py-KMS-Organization/py-kms/issues/100#issuecomment-1710827824) to learn more.
 
 ### Quick Guide
 The following are just some brief notes about parameters handling. For a more detailed description see [here](Usage.md).
