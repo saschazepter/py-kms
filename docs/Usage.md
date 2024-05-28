@@ -116,22 +116,22 @@ If placed just after `connect` refers to the main address and all additive coupl
 > Use this option not to allow binding / listening to the same ip address - port couple specified with `-n`.
 If placed just after `connect` refers to the main address and all additive couples without `-u` option. Reusing port is activated by default (except when running inside the Windows Sandbox and the current user is `WDAGUtilityAccount`).
 
-    -d or --dual
-> Use this option to allow listening to an IPv6 address also accepting connections via IPv4.
-If used it refers to all addresses (main and additional). Deactivated by default.
+    -d or --dual <bool>
+> Allows listening to an IPv6 address while also accepting connections via IPv4. If used, it refers to all addresses (main and additional). Activated by default. Pass in "false" or "true" to disable or enable.
 
-examples (with fictitious addresses and ports):
+Examples (with fictitious addresses and ports):
 
-| command                                                                                         | address (main) | backlog (main) | reuse port (main) | address (listen)                                 | backlog (listen) | reuse port (listen) | dualstack (main / listen) |
-| ----------------------------------------------------------------------------------------------- | -------------- | -------------- | ----------------- | ------------------------------------------------ | ---------------- | ------------------- | ------------------------- |
-| `python3 pykms_Server.py connect -b 12`                                                         | ('::', 1688)   | 12             | True              | []                                               | []               | []                  | False                     |
-| `python3 pykms_Server.py :: connect -b 12 -u -d`                                                | ('::', 1688)   | 12             | False             | []                                               | []               | []                  | True                      |
-| `python3 pykms_Server.py connect -n 1.1.1.1,1699 -b 10`                                         | ('::', 1688)   | 5              | True              | [('1.1.1.1', 1699)]                              | [10]             | [True]              | False                     |
-| `python3 pykms_Server.py :: 1655 connect -n 2001:db8:0:200::7,1699 -d -b 10 -n 2.2.2.2,1677 -u` | ('::', 1655)   | 5              | True              | [('2001:db8:0:200::7', 1699), ('2.2.2.2', 1677)] | [10, 5]          | [True, False]       | True                      |
-| `python3 pykms_Server.py connect -b 12 -u -n 1.1.1.1,1699 -b 10 -n 2.2.2.2,1677 -b 15`          | ('::', 1688)   | 12             | False             | [('1.1.1.1', 1699), ('2.2.2.2', 1677)]           | [10, 15]         | [False, False]      | False                     |
-| `python3 pykms_Server.py connect -b 12 -n 1.1.1.1,1699 -u -n 2.2.2.2,1677`                      | ('::', 1688)   | 12             | True              | [('1.1.1.1', 1699), ('2.2.2.2', 1677)]           | [12, 12]         | [False, True]       | False                     |
-| `python3 pykms_Server.py connect -d -u -b 8 -n 1.1.1.1,1699 -n 2.2.2.2,1677 -b 12`              | ('::', 1688)   | 8              | False             | [('1.1.1.1', 1699), ('2.2.2.2', 1677)]           | [8, 12]          | [False, False]      | True                      |
-| `python3 pykms_Server.py connect -b 11 -u -n ::,1699 -n 2.2.2.2,1677`                           | ('::', 1688)   | 11             | False             | [('::', 1699), ('2.2.2.2', 1677)]                | [11, 11]         | [False, False]      | False                     |
+| command                                                                                              | address (main) | backlog (main) | reuse port (main) | address (listen)                                 | backlog (listen) | reuse port (listen) | dualstack (main / listen) |
+| ---------------------------------------------------------------------------------------------------- | -------------- | -------------- | ----------------- | ------------------------------------------------ | ---------------- | ------------------- | ------------------------- |
+| `python3 pykms_Server.py connect -b 12`                                                              | ('::', 1688)   | 12             | True              | []                                               | []               | []                  | True                      |
+| `python3 pykms_Server.py :: connect -b 12 -u -d yes`                                                 | ('::', 1688)   | 12             | False             | []                                               | []               | []                  | True                      |
+| `python3 pykms_Server.py :: connect -b 12 -u -d false`                                               | ('::', 1688)   | 12             | False             | []                                               | []               | []                  | False                     |
+| `python3 pykms_Server.py connect -n 1.1.1.1,1699 -b 10`                                              | ('::', 1688)   | 5              | True              | [('1.1.1.1', 1699)]                              | [10]             | [True]              | True                      |
+| `python3 pykms_Server.py :: 1655 connect -n 2001:db8:0:200::7,1699 -d true -b 10 -n 2.2.2.2,1677 -u` | ('::', 1655)   | 5              | True              | [('2001:db8:0:200::7', 1699), ('2.2.2.2', 1677)] | [10, 5]          | [True, False]       | True                      |
+| `python3 pykms_Server.py connect -b 12 -u -n 1.1.1.1,1699 -b 10 -n 2.2.2.2,1677 -b 15`               | ('::', 1688)   | 12             | False             | [('1.1.1.1', 1699), ('2.2.2.2', 1677)]           | [10, 15]         | [False, False]      | True                      |
+| `python3 pykms_Server.py connect -b 12 -n 1.1.1.1,1699 -u -n 2.2.2.2,1677`                           | ('::', 1688)   | 12             | True              | [('1.1.1.1', 1699), ('2.2.2.2', 1677)]           | [12, 12]         | [False, True]       | True                      |
+| `python3 pykms_Server.py connect -d 0 -u -b 8 -n 1.1.1.1,1699 -n 2.2.2.2,1677 -b 12`                 | ('::', 1688)   | 8              | False             | [('1.1.1.1', 1699), ('2.2.2.2', 1677)]           | [8, 12]          | [False, False]      | False                     |
+| `python3 pykms_Server.py connect -b 11 -u -n ::,1699 -n 2.2.2.2,1677`                                | ('::', 1688)   | 11             | False             | [('::', 1699), ('2.2.2.2', 1677)]                | [11, 11]         | [False, False]      | True                      |
 
 ### pykms_Client.py
 If _py-kms_ server doesn't works correctly, you can test it with the KMS client `pykms_Client.py`, running on the same machine where you started `pykms_Server.py`.
