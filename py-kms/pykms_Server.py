@@ -175,6 +175,16 @@ class server_thread(threading.Thread):
 
 loggersrv = logging.getLogger('logsrv')
 
+def _str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise ValueError('Boolean value expected.')
+
 # 'help' string - 'default' value - 'dest' string.
 srv_options = {
         'ip'         : {'help' : 'The IP address (IPv4 or IPv6) to listen on. The default is \"::\" (all interfaces).', 'def' : "::", 'des' : "ip"},
@@ -211,8 +221,8 @@ Use \"STDOUTOFF\" to disable stdout messages. Use \"FILEOFF\" if you not want to
         'backlog'    : {'help' : 'Specifies the maximum length of the queue of pending connections. Default is \"5\".', 'def' : 5, 'des': "backlog"},
         'reuse'      : {'help' : 'Do not allows binding / listening to the same address and port. Reusing port is activated by default.', 'def' : True,
                         'des': "reuse"},
-        'dual'       : {'help' : 'Allows listening to an IPv6 address also accepting connections via IPv4. Deactivated by default.',
-                        'def' : False, 'des': "dual"}
+        'dual'       : {'help' : 'Allows listening to an IPv6 address while also accepting connections via IPv4. If used, it refers to all addresses (main and additional). Activated by default. Pass in "false" or "true" to disable or enable.',
+                        'def' : True, 'des': "dual"}
         }
 
 def server_options():
@@ -259,7 +269,7 @@ def server_options():
                                     help = srv_options['backlog']['help'], type = int)
         connect_parser.add_argument("-u", "--no-reuse", action = "append_const", dest = srv_options['reuse']['des'], const = False, default = [],
                                     help = srv_options['reuse']['help'])
-        connect_parser.add_argument("-d", "--dual", action = "store_true", dest = srv_options['dual']['des'], default = srv_options['dual']['def'],
+        connect_parser.add_argument("-d", "--dual", type = _str2bool, dest = srv_options['dual']['des'], default = srv_options['dual']['def'],
                                     help = srv_options['dual']['help'])
 
         try:

@@ -45,6 +45,9 @@ def start_kms(logger):
     for i in range(1, len(listen_ip)):
       command.append("-n")
       command.append(listen_ip[i] + "," + listen_port)
+    if dual := os.environ.get('DUALSTACK'):
+      command.append("-d")
+      command.append(dual)
 
   logger.debug("server_cmd: %s" % (" ".join(str(x) for x in command).strip()))
   pykms_process = subprocess.Popen(command)
