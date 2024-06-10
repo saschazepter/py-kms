@@ -184,7 +184,7 @@ def client_update():
                                         if sName == name + 'Enterprise' or \
                                            sName == name[:6] + 'ProfessionalPlus' + name[6:]:
                                                 clt_config['KMSClientSkuID'] = skuitem['Id']
-                                                clt_config['RequiredClientCount'] = int(kmsitem['NCountPolicy'])
+                                                clt_config['RequiredClientCount'] = int(kmsitem.get('NCountPolicy', 25)) # if not given default to 25
                                                 clt_config['KMSProtocolMajorVersion'] = int(float(kmsitem['DefaultKmsProtocol']))
                                                 clt_config['KMSProtocolMinorVersion'] = 0
                                                 clt_config['KMSClientLicenseStatus'] = 2

@@ -20,7 +20,7 @@ def epidGenerator(kmsId, version, lcid):
         for csvlkitem in csvlkitems:
                 try:
                         if kmsId in [ uuid.UUID(kmsitem) for kmsitem in csvlkitem['Activate'] ]:
-                                pkeys.append( (csvlkitem['GroupId'], csvlkitem['MinKeyId'], csvlkitem['MaxKeyId'], csvlkitem['InvalidWinBuild']) )
+                                pkeys.append( (csvlkitem['GroupId'], csvlkitem['MinKeyId'], csvlkitem['MaxKeyId'], csvlkitem.get('InvalidWinBuild', '[]')) )
                         else:
                                 # fallback to Windows Server 2019 parameters.
                                 pkeys.append( ('206', '551000000', '570999999', '[0,1,2]') )   
@@ -40,10 +40,11 @@ def epidGenerator(kmsId, version, lcid):
                                 hosts.append(winbuild)
                 except KeyError:
                         # fallback to Windows Server 2019 parameters.
-                        hosts.append( {'BuildNumber':'17763', 'PlatformId':'3612', 'MinDate':'02/10/2018'} )
+                        hosts.append( {'BuildNumber':'17763', 'PlatformId':'3612', 'ReleaseDate':'2018-10-02T00:00:00Z'} )
                                 
         host = random.choice(hosts)
-        BuildNumber, PlatformId, MinDate = host['BuildNumber'], host['PlatformId'], host['MinDate']
+
+        BuildNumber, PlatformId, ReleaseDate = host['BuildNumber'], host['PlatformId'], host['ReleaseDate'].rstrip("Z")
 
         # Generate Part 3 and Part 4: Product Key ID
         productKeyID = random.randint(MinKeyId, MaxKeyId)
@@ -55,7 +56,7 @@ def epidGenerator(kmsId, version, lcid):
         languageCode = lcid  # (C# CultureInfo.InstalledUICulture.LCID)
 
         # Generate Part 8: KMS Host Activation Date
-        d = datetime.datetime.strptime(MinDate, "%d/%m/%Y")
+        d = datetime.datetime.fromisoformat(ReleaseDate)
         minTime = datetime.date(d.year, d.month, d.day)       
 
         # Generate Year and Day Number
