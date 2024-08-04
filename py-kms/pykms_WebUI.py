@@ -139,3 +139,10 @@ def products():
         count_products_office=countProductsOffice
     )
     
+@app.route('/instructions')
+def instructions():
+    _increase_serve_count()
+    return render_template(
+        'instructions.html',
+        path='/instructions/'
+    )
