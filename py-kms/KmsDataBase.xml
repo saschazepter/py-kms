@@ -2,11 +2,12 @@
 
 <!-- Credits:
 https://forums.mydigitallife.net/threads/miscellaneous-kms-related-developments.52594/page-39#post-1587290 (Hotbird64)
+Initial modification: SystemRage
 & Other contributors to Py-KMS-Organization/py-kms project
 https://github.com/Py-KMS-Organization/py-kms/pulls?q=is%3Apr+is%3Aclosed
 https://github.com/Py-KMS-Organization/py-kms/issues
 
-Rewrite for later use, needs to be done fully.
+Modded for py-kms
 
 Documentation about options:
 <KmsData
