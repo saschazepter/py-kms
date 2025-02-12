@@ -204,7 +204,7 @@ https://forums.mydigitallife.net/threads/pkeyconfig-info-reader-gui-v8-0-0.88595
         </CsvlkItem>
 
         <!-- Windows Server 2022 -->
-        <CsvlkItem DisplayName="Windows Server 2022 Standard / Datacenter" ReleaseDate="2021-06-08T00:00:00Z" VlmcsdIndex="0" GroupId="4573" MinKeyId="0" MaxKeyId="49999" IniFileName="Windows" Id="6bad0243-1c35-46b2-b8e6-7a853e37413f" InvalidWinBuild="[0,1,2]">
+        <CsvlkItem DisplayName="Windows Server 2022 Standard / Datacenter" ReleaseDate="2021-06-08T00:00:00Z" VlmcsdIndex="0" GroupId="4573" MinKeyId="0" MaxKeyId="20029999" IniFileName="Windows" Id="661f7658-7035-4b4c-9f35-010682943ec2" InvalidWinBuild="[0,1,2]">
             <Activate KmsItem="212a64dc-43b1-4d3d-a30c-2fc69d2095c6" />
             <Activate KmsItem="33e156e4-b76f-4a52-9f91-f641dd95ac48" />
             <Activate KmsItem="8fe53387-3087-4447-8985-f75132215ac9" />
