@@ -80,14 +80,22 @@ https://forums.mydigitallife.net/threads/pkeyconfig-info-reader-gui-v8-0-0.88595
         <!-- 
             # Windows Server block
         -->
+
+        <!-- Windows Server 2025 -->
         <CsvlkItem DisplayName="Windows Server 2025 Standard / Datacenter" ReleaseDate="2024-11-01T00:00:00Z" VlmcsdIndex="0" GroupId="4573" MinKeyId="30000" MaxKeyId="20029999" IniFileName="Windows" Id="661f7658-7035-4b4c-9f35-010682943ec2" InvalidWinBuild="[0,1,2]">
             <Activate KmsItem="4b83307d-7788-50ff-8d1f-1861915bdb9d" />
         </CsvlkItem>
 
-        <!-- Need different entry due to different CSVLK -->
-        <CsvlkItem DisplayName="Windows Server 2025 Datacenter (Azure-only)" ReleaseDate="2024-11-01T00:00:00Z" VlmcsdIndex="0" GroupId="4574" MinKeyId="0" MaxKeyId="49999" IniFileName="Windows" Id="e73aabfa-12bc-4705-b551-2dd076bebc7d"/>
+        <!-- Need different entry due to different CSVLK. It lists both editions as possible for this CSVLK? -->
+        <CsvlkItem DisplayName="Windows Server 2025 Standard / Datacenter (Azure-only)" ReleaseDate="2024-11-01T00:00:00Z" VlmcsdIndex="0" GroupId="4574" MinKeyId="0" MaxKeyId="49999" IniFileName="Windows" Id="e73aabfa-12bc-4705-b551-2dd076bebc7d" InvalidWinBuild="[0,1,2]" />
             <Activate KmsItem="4b83307d-7788-50ff-8d1f-1861915bdb9d" />
         </CsvlkItem>
+
+        <!-- We don't know GVLK for this one, yet
+        <CsvlkItem DisplayName="Windows Server 2025 Standard / Datacenter (Microsoft Internal Lab)" ReleaseDate="2024-11-01T00:00:00Z VlmcsdIndex="0" GroupId="4575" MinKeyId="0" MaxKeyId="49999" IniFileName="Windows" Id="22105925-48c3-4ff4-a294-f654bb27e390"/>
+            <Activate KmsItem="4b83307d-7788-50ff-8d1f-1861915bdb9d" />
+        </CsvlkItem>
+        -->
 
         <CsvlkItem DisplayName="Windows Server 2022 Standard / Datacenter" ReleaseDate="2021-08-18T00:00:00Z" VlmcsdIndex="0" GroupId="4573" MinKeyId="0" MaxKeyId="49999" IniFileName="Windows" Id="ef6cfc9f-8c5d-44ac-9aad-de6a2ea0ae03" InvalidWinBuild="[0,1,2]">
             <Activate KmsItem="10a7e9fb-ca8c-5352-88f5-91b8dbe13b22" />
