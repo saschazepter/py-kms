@@ -349,10 +349,6 @@ You can read them using pkeyconfig-gui off MDL forums or Product Key Config. Rea
             <Activate KmsItem="85b5f61b-320b-4be3-814a-b76b2bfafc82" />
         </CsvlkItem>
 
-        <CsvlkItem DisplayName="Office 2016 VL [Pre-Release]" ReleaseDate="2015-09-15T00:00:00Z" IsPreview="true" GroupId="" MinKeyId="" MaxKeyId="" Id="1114b902-9bfe-4a7c-ba7c-1a7db3669d67" InvalidWinBuild="">
-            <Activate KmsItem="00000000-0000-0000-0000-000000000000" />
-        </CsvlkItem>
-
         <CsvlkItem DisplayName="Office 2013 VL" ReleaseDate="2013-01-29T00:00:00Z" VlmcsdIndex="2" GroupId="206" MinKeyId="234000000" MaxKeyId="255999999" IniFileName="Office2013" EPid="06401-00206-243-662026-03-1033-9600.0000-2802018" Id="2e28138a-847f-42bc-9752-61b03fff33cd" InvalidWinBuild="[]">
             <Activate KmsItem="e6a6f1bf-9d40-40c3-aa9f-c77ba21578c0" />
         </CsvlkItem>
