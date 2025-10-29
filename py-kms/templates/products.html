@@ -55,8 +55,9 @@
             <td>
                 <div style="position: relative; display: flex; align-items: center;">
                     <pre class="gvlk-value">{{ gvlk }}</pre>
-                    <button class="button is-small is-primary copy-button" data-clipboard-text="{{ gvlk }}" title="Copy to clipboard">
-                        Copy
+                    <button class="button is-small ml-3" title="Copy to clipboard"
+                        onclick="copyClick(this, '{{ gvlk }}');">
+                        📋
                     </button>
                 </div>
             </td>
@@ -66,37 +67,34 @@
     </tbody>
 </table>
 
-<!-- Include the clipboard.js library -->
-<script src="{{ url_for('static', filename='scripts/2.0.8/clipboard.min.js') }}"></script>
-
 <script>
-    // Initialize Clipboard.js
-    var clipboard = new ClipboardJS('.copy-button');
-
-    clipboard.on('success', function(e) {
-        e.trigger.innerText = 'Copied!';
-        setTimeout(function() {
-            e.trigger.innerText = 'Copy';
-        }, 1000);
-        e.clearSelection();
-    });
-
-    clipboard.on('error', function(e) {
-        e.trigger.innerText = 'Failed';
-        setTimeout(function() {
-            e.trigger.innerText = 'Copy';
-        }, 1000);
-    });
+    // Clipboard copy functionality
+    function copyClick(button, gvlk) {
+        navigator.clipboard.writeText(gvlk).then(function () {
+            button.classList.add('is-success');
+            button.textContent = '✅';
+            console.log('GVLK copied to clipboard: ' + gvlk);
+        }, function (err) {
+            button.classList.add('is-danger');
+            button.textContent = '⚠️';
+            alert('Could not copy "' + gvlk + '" to clipboard: ' + err);
+        });
+        // reset the color after a few seconds
+        setTimeout(function () {
+            button.classList.remove('is-success', 'is-danger');
+            button.textContent = '📋';
+        }, 3000);
+    }
 
     // Search functionality
-    document.getElementById('search').addEventListener('input', function() {
+    document.getElementById('search').addEventListener('input', function () {
         var searchValue = this.value.toLowerCase();
         var rows = document.querySelectorAll('#product-table-body tr');
-        
-        rows.forEach(function(row) {
+
+        rows.forEach(function (row) {
             var nameCell = row.querySelector('.product-name');
             var nameText = nameCell.textContent.toLowerCase();
-            
+
             if (nameText.includes(searchValue)) {
                 row.style.display = '';
             } else {
