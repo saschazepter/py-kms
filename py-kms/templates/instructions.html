@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Instructions{% endblock %}
+
+{% block content %}
+<div class="dynamic-width-block">
+
+    <section class="section">
+        <h1 class="subtitle">Documentation</h1>
+        <p>
+            The wiki is available on <a href="https://py-kms.readthedocs.io/en/latest/"
+                target="_blank">readthedocs.io</a>. It should provide you all the necessary information about how to set
+            up and use py-kms, without cluttering this readme. The documentation also includes more details about
+            activation with py-kms and how to get GVLK keys.
+        </p>
+    </section>
+
+    <section class="section">
+        <h1 class="subtitle">Getting Started</h1>
+        <p>
+            The <code>//nologo</code> option of cscript was used only to hide the startup logo.
+        </p>
+        <ol>
+            <li><a href="#windows">Windows</a></li>
+            <li><a href="#office">Office</a></li>
+            <!-- Add more steps as necessary -->
+        </ol>
+    </section>
+
+    <section class="section" id="windows">
+        <h1 class="subtitle">Windows</h1>
+        <ol class="instructions-list">
+            <li>Run a Command Prompt as Administrator (you are directly in <code>C:\Windows\System32</code> path);
+                <ul>
+                    <li><code>cscript //nologo slmgr.vbs /upk</code></li>
+                </ul>
+            </li>
+            <li>This is optional, it's for uninstalling any existing product key;
+                <ul>
+                    <li><code>cscript //nologo slmgr.vbs /ipk XXXXX-XXXXX-XXXXX-XXXXX-XXXXX</code></li>
+                </ul>
+            </li>
+            <li>Then put in your product's GVLK;
+                <ul>
+                    <li><code>cscript //nologo slmgr.vbs /skms ip_adress:1688</code></li>
+                </ul>
+            </li>
+            <li>Set connection parameters;
+                <ul>
+                    <li><code>cscript //nologo slmgr.vbs /ato</code></li>
+                </ul>
+            </li>
+            <li>Try online activation, but if that fails with error…
+                <ul>
+                    <li>* <code>0xC004F074</code> You'll most likely have to configure your firewall to accept incoming
+                        connections on TCP port <code>1688</code>. So for Linux users (server-side with
+                        <code>pykms_Server.py</code> running): <code>sudo ufw allow 1688</code> (revert this rule
+                        <code>sudo ufw delete allow 1688</code>) should fix that.</li>
+                    <li>* <code>0xC004F069</code> Take a look at the <a
+                            href="https://github.com/SystemRage/py-kms/issues/57" target="_blank">issue here</a>, it may
+                        help you…</li>
+                </ul>
+                <ul>
+                    <li><code>cscript //nologo slmgr.vbs /ato</code></li>
+                </ul>
+            </li>
+            <li>Attempt online activation (now with traffic on 1688 enabled);
+                <ul>
+                    <li><code>cscript //nologo slmgr.vbs /dlv</code></li>
+                </ul>
+            </li>
+            <li>View license information (optional).</li>
+            <!-- Add more steps as necessary -->
+        </ol>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='img/win1.webp') }}" alt="win1">
+            <img src="{{ url_for('static', filename='img/win2.webp') }}" alt="win2">
+        </div>
+    </section>
+
+    <section class="section" id="office">
+        <h1 class="subtitle">Office</h1>
+        <p>
+            Note that you'll have to install a volume license (VL) version of Office. Office versions downloaded from
+            MSDN and / or Technet are non-VL.
+        </p>
+        <ol>
+            <li type="0">Run a Command Prompt as Administrator and navigate to Office folder
+                <code>cd C:\ProgramFiles\Microsoft Office\OfficeXX</code> (64-bit path) or
+                <code>cd C:\ProgramFiles(x86)\Microsoft Office\OfficeXX</code> (32-bit path), where XX = <code>14</code>
+                for Office 2010, <code>15</code> for Office 2013, <code>16</code> for Office 2016 or Office 2019 or
+                Office 2021;</li>
+            <li>As you can see, running <code>/dstatus</code>, my Office is expiring (14 days remaining);
+                <ul>
+                    <li><code>cscript //nologo ossp.vbs /dstatus</code></li>
+                </ul>
+            </li>
+            <li>Only for example, let's go to uninstall this product;
+                <ul>
+                    <li><code>cscript //nologo ossp.vbs /unpkey:WFG99</code></li>
+                </ul>
+            </li>
+            <li>This is confirmed running <code>/dstatus</code> again;
+                <ul>
+                    <li><code>cscript //nologo ossp.vbs /dstatus</code></li>
+                </ul>
+            </li>
+            <li>Now i put my product's GVLK (and you your key);
+                <ul>
+                    <li><code>cscript //nologo ossp.vbs /inpkey:XXXXX-XXXXX-XXXXX-XXXXX-XXXXX</code></li>
+                </ul>
+            </li>
+            <li>Set the connection parameter KMS server address;
+                <ul>
+                    <li><code>cscript //nologo ossp.vbs /sethst:ip_adres</code></li>
+                </ul>
+            </li>
+            <li>Set the connection parameter KMS server port;
+                <ul>
+                    <li><code>cscript //nologo ossp.vbs /setprt:1688</code></li>
+                </ul>
+            </li>
+            <li>Activate installed Office product key;
+                <ul>
+                    <li><code>cscript //nologo ossp.vbs /act</code></li>
+                </ul>
+            </li>
+            <li>View license informations (in my case product is now licensed and remaining grace 180 days as expected).
+                <ul>
+                    <li><code>cscript //nologo ossp.vbs /dstatus</code></li>
+                </ul>
+            </li>
+            <!-- Add more steps as necessary -->
+        </ol>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='img/off1.webp') }}" alt="off1"
+                style="max-width: 100%; height: auto;">
+            <img src="{{ url_for('static', filename='img/off2.webp') }}" alt="off2"
+                style="max-width: 100%; height: auto;">
+            <img src="{{ url_for('static', filename='img/off3.webp') }}" alt="off3"
+                style="max-width: 100%; height: auto;">
+            <img src="{{ url_for('static', filename='img/off4.webp') }}" alt="off4"
+                style="max-width: 100%; height: auto;">
+        </div>
+    </section>
+</div>
+{% endblock %}

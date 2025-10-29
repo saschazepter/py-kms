@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>py-kms {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename= 'css/bulma.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
         #content {
             margin: 1em;
@@ -23,6 +24,16 @@
     </style>
 </head>
 <body>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">Home</a>
+                <a class="navbar-item" href="/instructions">Instructions</a>
+                <!-- Add more navigation items if needed -->
+            </div>
+        </div>
+    </nav>
+
     <div id="content">
         {% block content %}{% endblock %}
 
@@ -39,13 +50,18 @@
         <div class="content has-text-centered">
             <p>
                 <strong>py-kms</strong> is online since <span class="convert_timestamp">{{ start_time }}</span>.
-                This instance was accessed {{ get_serve_count() }} times. View this softwares license <a href="/license">here</a>.
+                This instance was accessed {{ get_serve_count() }} times. View this software's license <a href="/license">here</a>.
                 {% if version_info %}
                 <br>This instance is running version "{{ version_info['hash'] }}" from branch "{{ version_info['branch'] }}" of py-kms.
                 {% endif %}
             </p>
         </div>
     </footer>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+        ↑
+    </button>
 
     <script>
         for(let element of document.getElementsByClassName('convert_timestamp')) {

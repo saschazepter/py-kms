@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}clients{% endblock %}
+{% block title %}Clients{% endblock %}
 
 {% block content %}
 <nav class="level">
@@ -32,22 +32,77 @@
 
 <hr>
 
+<!-- Search Input -->
+<div class="field">
+    <div class="control">
+        <input class="input" type="text" id="search" placeholder="Search by Name" />
+    </div>
+</div>
+
+<!-- Table -->
 <table class="table is-bordered is-striped is-hoverable is-fullwidth">
     <thead>
         <tr>
-          <th>Name</th>
-          <th><abbr title="Group Volume License Key">GVLK</abbr></th>
+            <th>Name</th>
+            <th><abbr title="Group Volume License Key">GVLK</abbr></th>
         </tr>
     </thead>
-    <tbody>
-      {% for name, gvlk in products | dictsort %}
-      {% if gvlk %}
-      <tr>
-        <td>{{ name }}</td>
-        <td><pre>{{ gvlk }}</pre></td>
-      </tr>
-      {% endif %}
-      {% endfor %}
+    <tbody id="product-table-body">
+        {% for name, gvlk in products | dictsort %}
+        {% if gvlk %}
+        <tr>
+            <td class="product-name">{{ name }}</td>
+            <td>
+                <div style="position: relative; display: flex; align-items: center;">
+                    <pre class="gvlk-value">{{ gvlk }}</pre>
+                    <button class="button is-small is-primary copy-button" data-clipboard-text="{{ gvlk }}" title="Copy to clipboard">
+                        Copy
+                    </button>
+                </div>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
     </tbody>
 </table>
+
+<!-- Include the clipboard.js library -->
+<script src="{{ url_for('static', filename='scripts/2.0.8/clipboard.min.js') }}"></script>
+
+<script>
+    // Initialize Clipboard.js
+    var clipboard = new ClipboardJS('.copy-button');
+
+    clipboard.on('success', function(e) {
+        e.trigger.innerText = 'Copied!';
+        setTimeout(function() {
+            e.trigger.innerText = 'Copy';
+        }, 1000);
+        e.clearSelection();
+    });
+
+    clipboard.on('error', function(e) {
+        e.trigger.innerText = 'Failed';
+        setTimeout(function() {
+            e.trigger.innerText = 'Copy';
+        }, 1000);
+    });
+
+    // Search functionality
+    document.getElementById('search').addEventListener('input', function() {
+        var searchValue = this.value.toLowerCase();
+        var rows = document.querySelectorAll('#product-table-body tr');
+        
+        rows.forEach(function(row) {
+            var nameCell = row.querySelector('.product-name');
+            var nameText = nameCell.textContent.toLowerCase();
+            
+            if (nameText.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
 {% endblock %}
