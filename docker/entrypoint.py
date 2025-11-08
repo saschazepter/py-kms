@@ -26,7 +26,6 @@ def change_uid_grp(logger):
   new_uid = int(os.getenv('UID', str(uid)))
   os.chown("/home/py-kms", new_uid, new_gid)
   os.chmod("/home/py-kms", 0o700)
-  os.chmod("/usr/bin/start.py", 0o555) # allow execution by non-root users
   if os.path.isdir(dbPath):
     # Correct permissions recursively, as to access the database file, also its parent folder must be accessible
     logger.debug(f'Correcting owner permissions on {dbPath}')
