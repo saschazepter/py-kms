@@ -1,5 +1,5 @@
 # This is a minimized version from docker/docker-py3-kms/Dockerfile without SQLite support to further reduce image size
-FROM alpine:3.15
+FROM alpine:3.22
 
 ENV IP ::
 ENV DUALSTACK 1
@@ -23,7 +23,7 @@ bash \
   ca-certificates \
   shadow \
   tzdata \
-  && pip3 install --no-cache-dir -r /home/py-kms/requirements.txt \
+  && pip3 install --break-system-packages --no-cache-dir -r /home/py-kms/requirements.txt \
   && adduser -S py-kms -G users -s /bin/bash \
   && chown py-kms:users /home/py-kms \
   # Fix undefined timezone, in case the user did not mount the /etc/localtime

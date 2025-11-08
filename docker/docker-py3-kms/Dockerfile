@@ -1,5 +1,5 @@
 # Switch to the target image
-FROM alpine:3.15
+FROM alpine:3.22
 
 ARG BUILD_COMMIT=unknown
 ARG BUILD_BRANCH=unknown
@@ -28,7 +28,7 @@ RUN apk add --no-cache --update \
   ca-certificates \
   tzdata \
   shadow \
-  && pip3 install --no-cache-dir -r /home/py-kms/requirements.txt \
+  && pip3 install --break-system-packages --no-cache-dir -r /home/py-kms/requirements.txt \
   && mkdir /db/ \
   && adduser -S py-kms -G users -s /bin/bash \
   && chown py-kms:users /home/py-kms \
