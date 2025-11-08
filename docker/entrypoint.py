@@ -45,7 +45,7 @@ def change_uid_grp(logger):
         os.chmod(fPath, 0o600)
     logger.debug(subprocess.check_output(['ls', '-la', dbPath]).decode())
   else:
-    logger.error(f'Database path {dbPath} is not a directory, will not correct owner permissions.')
+    logger.warning(f'Database path {dbPath} is not a directory, will not correct owner permissions.')
   if 'LOGFILE' in os.environ and os.path.exists(os.environ['LOGFILE']):
     # Oh, the user also wants a custom log file -> make sure start.py can access it by setting the correct permissions (777)
     os.chmod(os.environ['LOGFILE'], 0o777)
