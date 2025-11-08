@@ -41,6 +41,13 @@ COPY docker/healthcheck.py /usr/bin/healthcheck.py
 COPY docker/start.py /usr/bin/start.py
 RUN chmod 555 /usr/bin/entrypoint.py /usr/bin/healthcheck.py /usr/bin/start.py
 
+# Additional permission hardening: All files read-only for the executing user
+RUN chown root: -R /home/py-kms && \
+    chmod 444 -R /home/py-kms && \
+    chown py-kms: /home/py-kms && \
+    chmod 700 /home/py-kms && \
+    find /home/py-kms -type d -print -exec chmod +x {} ';'
+
 # Web-interface specifics
 COPY LICENSE /LICENSE
 RUN echo "$BUILD_COMMIT" > /VERSION && echo "$BUILD_BRANCH" >> /VERSION
