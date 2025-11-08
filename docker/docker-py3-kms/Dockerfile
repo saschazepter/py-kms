@@ -1,5 +1,5 @@
 # Switch to the target image
-FROM alpine:3.15
+FROM alpine:3.22
 
 ARG BUILD_COMMIT=unknown
 ARG BUILD_BRANCH=unknown
@@ -28,7 +28,7 @@ RUN apk add --no-cache --update \
   ca-certificates \
   tzdata \
   shadow \
-  && pip3 install --no-cache-dir -r /home/py-kms/requirements.txt \
+  && pip3 install --break-system-packages --no-cache-dir -r /home/py-kms/requirements.txt \
   && mkdir /db/ \
   && adduser -S py-kms -G users -s /bin/bash \
   && chown py-kms:users /home/py-kms \
@@ -40,6 +40,13 @@ COPY docker/entrypoint.py /usr/bin/entrypoint.py
 COPY docker/healthcheck.py /usr/bin/healthcheck.py
 COPY docker/start.py /usr/bin/start.py
 RUN chmod 555 /usr/bin/entrypoint.py /usr/bin/healthcheck.py /usr/bin/start.py
+
+# Additional permission hardening: All files read-only for the executing user
+RUN chown root: -R /home/py-kms && \
+    chmod 444 -R /home/py-kms && \
+    chown py-kms: /home/py-kms && \
+    chmod 700 /home/py-kms && \
+    find /home/py-kms -type d -print -exec chmod +x {} ';'
 
 # Web-interface specifics
 COPY LICENSE /LICENSE

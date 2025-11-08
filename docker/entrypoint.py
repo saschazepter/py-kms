@@ -25,29 +25,35 @@ def change_uid_grp(logger):
   new_gid = int(os.getenv('GID', str(gid)))
   new_uid = int(os.getenv('UID', str(uid)))
   os.chown("/home/py-kms", new_uid, new_gid)
-  os.chown("/usr/bin/start.py", new_uid, new_gid)
+  os.chmod("/home/py-kms", 0o700)
+  os.chmod("/usr/bin/start.py", 0o555) # allow execution by non-root users
   if os.path.isdir(dbPath):
-    # Corret permissions recursively, as to access the database file, also its parent folder must be accessible
-    logger.debug(f'Correcting owner permissions on {dbPath}.')
+    # Correct permissions recursively, as to access the database file, also its parent folder must be accessible
+    logger.debug(f'Correcting owner permissions on {dbPath}')
     os.chown(dbPath, new_uid, new_gid)
+    os.chmod(dbPath, 0o700) # executable bit on dirs to allow interaction
     for root, dirs, files in os.walk(dbPath):
       for dName in dirs:
         dPath = os.path.join(root, dName)
-        logger.debug(f'Correcting owner permissions on {dPath}.')
+        logger.debug(f'Correcting owner permissions on {dPath}')
         os.chown(dPath, new_uid, new_gid)
+        os.chmod(dPath, 0o700) # executable bit on dirs to allow interaction
       for fName in files:
         fPath = os.path.join(root, fName)
-        logger.debug(f'Correcting owner permissions on {fPath}.')
+        logger.debug(f'Correcting owner permissions on {fPath}')
         os.chown(fPath, new_uid, new_gid)
+        os.chmod(fPath, 0o600)
     logger.debug(subprocess.check_output(['ls', '-la', dbPath]).decode())
+  else:
+    logger.warning(f'Database path {dbPath} is not a directory, will not correct owner permissions.')
   if 'LOGFILE' in os.environ and os.path.exists(os.environ['LOGFILE']):
     # Oh, the user also wants a custom log file -> make sure start.py can access it by setting the correct permissions (777)
     os.chmod(os.environ['LOGFILE'], 0o777)
     logger.error(str(subprocess.check_output(['ls', '-la', os.environ['LOGFILE']])))
-  logger.info("Setting gid to '%s'." % str(new_gid))
+  # Drop actual permissions
+  logger.info(f"Setting gid to {new_gid}")
   os.setgid(new_gid)
-
-  logger.info("Setting uid to '%s'." % str(new_uid))
+  logger.info(f"Setting uid to {new_uid}")
   os.setuid(new_uid)
 
 def change_tz(logger):
