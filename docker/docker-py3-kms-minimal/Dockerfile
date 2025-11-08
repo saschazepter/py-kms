@@ -1,19 +1,19 @@
 # This is a minimized version from docker/docker-py3-kms/Dockerfile without SQLite support to further reduce image size
 FROM alpine:3.22
 
-ENV IP ::
-ENV DUALSTACK 1
-ENV PORT 1688
-ENV EPID ""
-ENV LCID 1033
-ENV CLIENT_COUNT 26
-ENV ACTIVATION_INTERVAL 120
-ENV RENEWAL_INTERVAL 10080
+ENV IP=::
+ENV DUALSTACK=1
+ENV PORT=1688
+ENV EPID=""
+ENV LCID=1033
+ENV CLIENT_COUNT=26
+ENV ACTIVATION_INTERVAL=120
+ENV RENEWAL_INTERVAL=10080
 ENV HWID RANDOM
-ENV LOGLEVEL INFO
-ENV LOGFILE STDOUT
-ENV LOGSIZE ""
-ENV WEBUI 0
+ENV LOGLEVEL=INFO
+ENV LOGFILE=STDOUT
+ENV LOGSIZE=""
+ENV WEBUI=0
 
 COPY docker/docker-py3-kms-minimal/requirements.txt /home/py-kms/requirements.txt
 RUN apk add --no-cache --update \
