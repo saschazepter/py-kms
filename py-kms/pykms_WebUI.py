@@ -15,33 +15,34 @@ def _get_serve_count():
     return _serve_count
 
 _kms_items = None
-_kms_items_ignored = None
+_kms_items_noglvk = None
 def _get_kms_items_cache():
-    global _kms_items, _kms_items_ignored
+    global _kms_items, _kms_items_noglvk
     if _kms_items is None:
-        _kms_items = {}
-        _kms_items_ignored = 0
-        queue = [kmsDB2Dict()]
-        while len(queue):
-            item = queue.pop(0)
-            if isinstance(item, list):
-                for i in item:
-                    queue.append(i)
-            elif isinstance(item, dict):
-                if 'KmsItems' in item:
-                    queue.append(item['KmsItems'])
-                elif 'SkuItems' in item:
-                    queue.append(item['SkuItems'])
-                elif 'Gvlk' in item:
-                    if len(item['Gvlk']):
-                        _kms_items[item['DisplayName']] = item['Gvlk']
-                    else:
-                        _kms_items_ignored += 1
-                #else:
-                #    print(item)
-            else:
-                raise NotImplementedError(f'Unknown type: {type(item)}')
-    return _kms_items, _kms_items_ignored
+        _kms_items = {} # {group: str -> {product: str -> gvlk: str}}
+        _kms_items_noglvk = 0
+        for section in kmsDB2Dict():
+            for element in section:
+                if "KmsItems" in element:
+                    for product in element["KmsItems"]:
+                        group_name = product["DisplayName"]
+                        items = {}
+                        for item in product["SkuItems"]:
+                            items[item["DisplayName"]] = item["Gvlk"]
+                            if not item["Gvlk"]:
+                                _kms_items_noglvk += 1
+                        if len(items) == 0:
+                            continue
+                        if group_name not in _kms_items:
+                            _kms_items[group_name] = {}
+                        _kms_items[group_name].update(items)
+                elif "DisplayName" in element and "BuildNumber" in element and "PlatformId" in element:
+                    pass # these are WinBuilds
+                elif "DisplayName" in element and "Activate" in element:
+                    pass # these are CsvlkItems
+                else:
+                    raise NotImplementedError(f'Unknown element: {element}')
+    return _kms_items, _kms_items_noglvk
 
 app = Flask('pykms_webui')
 app.jinja_env.globals['start_time'] = datetime.datetime.now()
@@ -90,7 +91,7 @@ def root():
         count_clients=countClients,
         count_clients_windows=countClientsWindows,
         count_clients_office=countClientsOffice,
-        count_projects=len(_get_kms_items_cache()[0])
+        count_projects=sum([len(entries) for entries in _get_kms_items_cache()[0].values()])
     ), 200 if error is None else 500
 
 @app.route('/readyz')
@@ -125,15 +126,15 @@ def license():
 @app.route('/products')
 def products():
     _increase_serve_count()
-    items, ignored = _get_kms_items_cache()
-    countProducts = len(items)
-    countProductsWindows = len([i for i in items if 'windows' in i.lower()])
-    countProductsOffice = len([i for i in items if 'office' in i.lower()])
+    items, noglvk = _get_kms_items_cache()
+    countProducts = sum([len(entries) for entries in items.values()])
+    countProductsWindows = sum([len(entries) for (name, entries) in items.items() if 'windows' in name.lower()])
+    countProductsOffice = sum([len(entries) for (name, entries) in items.items() if 'office' in name.lower()])
     return render_template(
         'products.html',
         path='/products/',
         products=items,
-        filtered=ignored,
+        filtered=noglvk,
         count_products=countProducts,
         count_products_windows=countProductsWindows,
         count_products_office=countProductsOffice

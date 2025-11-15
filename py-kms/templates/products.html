@@ -32,22 +32,36 @@
 
 <hr>
 
+<style scoped>
+    td.glvk {
+        width: 24rem;
+    }
+
+    pre.glvk {
+        width: min-content;
+    }
+</style>
+
+{% for group_name, group_products in products | dictsort %}
+<h1 class="title">{{ group_name }}</h1>
 <table class="table is-bordered is-striped is-hoverable is-fullwidth">
     <thead>
         <tr>
-          <th>Name</th>
-          <th><abbr title="Group Volume License Key">GVLK</abbr></th>
+            <th>Name</th>
+            <th class="glvk"><abbr title="Group Volume License Key">GVLK</abbr></th>
         </tr>
     </thead>
     <tbody>
-      {% for name, gvlk in products | dictsort %}
-      {% if gvlk %}
-      <tr>
-        <td>{{ name }}</td>
-        <td><pre>{{ gvlk }}</pre></td>
-      </tr>
-      {% endif %}
-      {% endfor %}
+        {% for name, gvlk in group_products | dictsort %}
+        <tr>
+            <td>{{ name }}</td>
+            <td class="glvk">
+                {% if gvlk %}
+                <pre class="glvk">{{ gvlk }}</pre>{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
     </tbody>
 </table>
+{% endfor %}
 {% endblock %}
